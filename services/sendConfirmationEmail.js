@@ -1,8 +1,9 @@
 const { transporter } = require("../index");
+require("dotenv").config();
 
 function sendConfirmationEmail(email, orderId, amount) {
   const mailOptions = {
-    from: "your-email@example.com",
+    from: process.env.SELLER_MAIL_ADDRESS,
     to: email,
     subject: "Payment Confirmation",
     text: `Your payment of ${amount} has been received for order ${orderId}.`,

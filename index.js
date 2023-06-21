@@ -15,14 +15,14 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: "your-email@example.com",
-    pass: process.env.GMAIL_PASSWORD,
+    user: process.env.USER_MAIL_ADDRESS,
+    pass: process.env.GMAIL_APP_PASSWORD,
   },
 });
 exports.transporter = transporter;
 
 const MONGODB_URI =
-  process.env.MONGODB_URI || "mongodb://localhost:27017/myapp";
+  process.env.MONGODB_URI || "mongodb://localhost:27017/budpay_webhook";
 const PORT = process.env.PORT || 3000;
 
 mongoose

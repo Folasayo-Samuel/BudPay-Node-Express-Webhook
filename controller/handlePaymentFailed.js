@@ -1,7 +1,7 @@
 const {
   sendPaymentFailedNotification,
-} = require("./sendPaymentFailedNotification");
-const {Order} = require("../model/Order");
+} = require("../services/sendPaymentFailedNotification");
+const { Order } = require("../model/Order");
 
 async function handlePaymentFailed(data) {
   const { orderId, amount, customerEmail } = data;
