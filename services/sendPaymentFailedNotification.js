@@ -1,12 +1,12 @@
 const { transporter } = require("../index");
 require("dotenv").config();
 
-function sendPaymentFailedNotification(email, orderId, amount) {
+function sendPaymentFailedNotification(customerEmail, orderId, amount) {
   const mailOptions = {
     from: process.env.SELLER_MAIL_ADDRESS,
     to: process.env.BUDPAY_CUSTOMER_SUPPORT_MAIL,
     subject: "Payment Failed Notification",
-    text: `Payment of ${amount} for order ${orderId} has failed for customer ${email}.`,
+    text: `Payment of ${amount} for order ${orderId} has failed for customer ${customerEmail}.`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {

@@ -1,8 +1,13 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
-  orderId: String,
-  status: String,
+  orderId: Number,
+  status: {
+    type: String,
+    default: "pending",
+  },
+  customerEmail: String,
+  amount: Number,
 });
 
 const Order = mongoose.model("Order", orderSchema);

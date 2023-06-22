@@ -3,12 +3,34 @@ require("dotenv").config();
 const nodemailer = require("nodemailer");
 const mongoose = require("mongoose");
 const { createWebhook } = require("./controller/Webhook");
+const Order = require("./model/Order");
 
 const app = express();
 app.use(express.json());
 
 // Route
-app.post("/webhook", createWebhook);
+app.get("/", (req, res) => {
+  res.send("Welcome to BudPay Webhooks Tutorial!");
+});
+app.post("/api/v1/webhook", createWebhook);
+app.post("/api/v1/order", async (req, res) => {
+  try {
+    let data = req.body;
+    const index = await Order.find().count();
+    const orderDetails = new Order({
+      orderId: index + 1,
+      status: data.status,
+      customerEmail: data.customerEmail,
+      amount: data.amount,
+    });
+
+    await orderDetails.save();
+
+    res.status(201).send({ message: "Order created successfully!" });
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 // Configure Nodemailer
 const transporter = nodemailer.createTransport({
