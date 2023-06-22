@@ -1,14 +1,14 @@
 const { Order } = require("../model/Order");
 const {
-  sendDeclineNotification,
-} = require("../services/sendPaymentDeclinedNotification");
+  sendRefundNotification,
+} = require("../services/sendRefundNotification");
 
-async function handlePaymentDeclined(data) {
+async function handlePaymentRefund(data) {
   const { orderId, amount, customerEmail } = data;
 
   try {
     await Order.findOneAndUpdate({ orderId }, { status: "declined" });
-    sendDeclineNotification(customerEmail, orderId, amount);
+    sendRefundNotification(customerEmail, orderId, amount);
   } catch (error) {
     console.error("Failed to handle payment decline:", error);
   }
@@ -17,4 +17,4 @@ async function handlePaymentDeclined(data) {
   );
 }
 
-exports.handlePaymentDeclined = handlePaymentDeclined;
+exports.handlePaymentRefund = handlePaymentRefund;

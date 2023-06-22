@@ -1,19 +1,27 @@
-const { handlePaymentSucceeded } = require("./handlePaymentSucceeded");
-const { handlePaymentPending } = require("./handlePaymentPending");
-const { handlePaymentDeclined } = require("./handlePaymentDeclined");
-const { handlePaymentFailed } = require("./handlePaymentFailed");
+const { handlePaymentRefund } = require("./handlePaymentRefund");
+const { handlePaymentDispute } = require("./handlePaymentDispute");
+const { handlePaymentTransaction } = require("./handlePaymentTransaction");
+const {
+  handlePaymentTransactionRecurrent,
+} = require("./handlePaymentTransactionRecurrent");
+const {handlePaymentTransactionWallet} = require("./handlePaymentTransactionWallet");
+const {handlePaymentRecurringDebit} = require("./handlePaymentRecurringDebit");
 
 module.exports.createWebhook = (req, res) => {
   const { event, data } = req.body;
 
-  if (event === "paid") {
-    handlePaymentSucceeded(data);
-  } else if (event === "pending") {
-    handlePaymentPending(data);
-  } else if (event === "declined") {
-    handlePaymentDeclined(data);
-  } else if (event === "failed") {
-    handlePaymentFailed(data);
+  if (event.eventType === "refund") {
+    handlePaymentRefund(data);
+  } else if (event.eventType === "dispute") {
+    handlePaymentDispute(data);
+  } else if (event.eventType === "transaction") {
+    handlePaymentTransaction(data);
+  } else if (event.eventType === "transaction.recurrent") {
+    handlePaymentTransactionRecurrent(data);
+  } else if (event.eventType === "transaction.wallet") {
+    handlePaymentTransactionWallet(data);
+  } else if (event.eventType === "transaction.recurring.debit") {
+    handlePaymentRecurringDebit(data);
   } else {
     console.log(`Received unknown event: ${event}`);
   }
@@ -21,4 +29,3 @@ module.exports.createWebhook = (req, res) => {
 
   res.status(200).send("Webhook received successfully.");
 };
-
