@@ -1,7 +1,12 @@
 const { transporter } = require("../index");
 require("dotenv").config();
+const { Order } = require("../model/Order");
+
+  const { orderId, amount, customerEmail } = Order;
+
 
 function sendConfirmationEmail(customerEmail, orderId, amount) {
+  
   const mailOptions = {
     from: process.env.SELLER_MAIL_ADDRESS,
     to: customerEmail,

@@ -2,7 +2,7 @@ const { Order } = require("../model/Order");
 const { sendConfirmationEmail } = require("../services/sendConfirmationEmail");
 
 async function handlePaymentSucceeded(data) {
-  const { orderId, amount, customerEmail } = data;
+  const { orderId, amount, customerEmail } = Order;
 
   try {
     await Order.findOneAndUpdate({ orderId }, { status: "paid" });
@@ -16,4 +16,5 @@ async function handlePaymentSucceeded(data) {
     `Payment succeeded for order ${orderId}. Amount: ${amount}. Customer email: ${customerEmail}`
   );
 }
+
 exports.handlePaymentSucceeded = handlePaymentSucceeded;

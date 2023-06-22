@@ -17,6 +17,8 @@ module.exports.createWebhook = (req, res) => {
   } else {
     console.log(`Received unknown event: ${event}`);
   }
+  console.log(event);
 
   res.status(200).send("Webhook received successfully.");
 };
+

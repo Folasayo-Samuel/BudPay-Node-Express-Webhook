@@ -3,7 +3,7 @@ require("dotenv").config();
 const nodemailer = require("nodemailer");
 const mongoose = require("mongoose");
 const { createWebhook } = require("./controller/Webhook");
-const Order = require("./model/Order");
+const { Order } = require("./model/Order");
 
 const app = express();
 app.use(express.json());
